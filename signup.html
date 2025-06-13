@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create Account</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main>
+    <section class="container">
+      <h2>Create Account</h2>
+      <form id="signup-form">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button class="btn" type="submit">Sign Up</button>
+        <a href="/" class="link">Back to Login</a>
+      </form>
+      <div id="signup-message" class="message"></div>
+    </section>
+  </main>
+</body>
+</html>
+
+
+  <!-- Load Supabase library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<!-- Initialize your Supabase client -->
+<script src="js/auth.js"></script>
+
+<!-- Your signup logic -->
+<script>
+  const signupForm = document.getElementById('signup-form');
+  const messageBox = document.getElementById('signup-message');
+
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = signupForm.email.value;
+    const password = signupForm.password.value;
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    });
+
+    if (error) {
+      messageBox.textContent = '❌ Error: ' + error.message;
+      messageBox.style.color = 'red';
+    } else {
+      messageBox.textContent = '✅ Account created! Check your email to confirm.';
+      messageBox.style.color = 'green';
+    }
+  });
+</script>

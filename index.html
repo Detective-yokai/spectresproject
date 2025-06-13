@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Welcome - Homepage</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
+    'https://naqwdawmumzokqisfcnh.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hcXdkYXdtdW16b2txaXNmY25oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MzkzMTgsImV4cCI6MjA2NTMxNTMxOH0.1Edyb2N8kQ9hkWq8FSPOdQnpplrcH7S2cUmCIo04jHY'
+  );
+</script>
+
 </head>
 <body>
   <header>
@@ -14,19 +23,55 @@
   
   <main>
 <section class="container">
-    <h2>Welcome</h2>
-    <form action="/login" method="POST">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button class="btn" type="submit">Log In</button>
-    </form>
-
-    <a href="/signup" class="link">Create Account</a>
-
-    <form action="/guest" method="GET">
-      <button class="btn guest-btn" type="submit">Continue as Guest</button>
-    </form>
-  </section>
+  <h2>Welcome</h2>
+  <div id="login-message" class="message-box" style="display: none;"></div>
+  <form action="/login" method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button class="btn" type="submit">Log In</button>
+  </form>
+  <a href="/signup.html" class="link">Create Account</a>
+  <form action="/guest" method="GET">
+    <button class="btn guest-btn" type="submit">Continue as Guest</button>
+  </form>
+</section>
   </main>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+<script>
+  const loginForm = document.querySelector('form[action="/login"]');
+  const messageBox = document.getElementById('login-message');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = loginForm.username.value;
+    const password = loginForm.password.value;
+
+    const { error, data } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      messageBox.style.display = 'block';
+      messageBox.className = 'message-box error';
+      messageBox.textContent = '⚠️ ' + error.message;
+    } else {
+      messageBox.style.display = 'block';
+      messageBox.className = 'message-box success';
+      messageBox.textContent = '✅ Login successful! Redirecting...';
+      setTimeout(() => {
+        window.location.href = '/dashboard.html';
+      }, 1200);
+    }
+  });
+</script>

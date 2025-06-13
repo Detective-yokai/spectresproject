@@ -88,6 +88,27 @@ input[type="password"] {
   text-decoration: none;
 }
 
+.message-box {
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  font-size: 0.95em;
+  text-align: center;
+}
+
+.message-box.error {
+  background-color: #ffe5e5;
+  color: #c0392b;
+  border: 1px solid #e74c3c;
+}
+
+.message-box.success {
+  background-color: #e5ffe5;
+  color: #27ae60;
+  border: 1px solid #2ecc71;
+}
+
+
 .link:hover {
   text-decoration: underline;
 }

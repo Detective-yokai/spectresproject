@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dashboard">
+  <main>
+    <section class="container">
+      <h2>Dashboard</h2>
+      <p id="welcome-message">Loading user info...</p>
+      <button class="btn" id="logout-btn">Logout</button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Check session
+    async function checkUser() {
+      const {
+        data: { session }
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        // Not logged in, redirect to login
+        window.location.href = "/";
+      } else {
+        const user = session.user;
+        document.getElementById("welcome-message").textContent = `Welcome, ${user.email}`;
+      }
+    }
+
+    // Logout
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "/";
+    });
+
+    checkUser();
+  </script>
+</body>
+</html>
