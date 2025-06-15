@@ -31,9 +31,14 @@
     <button class="btn" type="submit">Log In</button>
   </form>
   <a href="/signup.html" class="link">Create Account</a>
-<a href="dashboard.html" class="btn guest-btn">Continue as Guest</a>
+<button class="btn guest-btn" type="button" onclick="continueAsGuest()">Continue as Guest</button>
 </section>
   </main>
+  <script>
+  function continueAsGuest() {
+    window.location.href = 'dashboard.html';
+  }
+  </script>
 </body>
 </html>
 
